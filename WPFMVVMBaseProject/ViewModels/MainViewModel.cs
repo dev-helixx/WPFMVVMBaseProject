@@ -6,11 +6,20 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using WPFMVVMBaseProject.Commands;
+using WPFMVVMBaseProject.Models;
 
 namespace WPFMVVMBaseProject.ViewModels
 {
+
+  
+
   class MainViewModel : BaseViewModel
   {
+
+    #region Fields
+    private TestModel model = new TestModel();
+    #endregion
+
 
     #region Events
     public event PubSubEventHandler<object> PubSubCheckedHandler;
@@ -23,6 +32,8 @@ namespace WPFMVVMBaseProject.ViewModels
 
     public MainViewModel()
     {
+      
+      model.Value = ConfigurationManager.AppSettings["TestKey"];
 
       // Publish an event with eventName = PubSubTest. Others can subscribe to said eventName, in order to catch when it is raised
       // Use: PubSub<object>.Subscribe("PubSubTest", PubSubTestHandler); to subscribe to the event in another class
@@ -86,8 +97,7 @@ namespace WPFMVVMBaseProject.ViewModels
 
     private void Load()
     {
-      var test = ConfigurationManager.AppSettings["TestKey"];
-      TextBoxInMainWindow = test;
+      TextBoxInMainWindow = model.Value;
     }
 
 
